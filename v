@@ -52,13 +52,9 @@ cache allow all
 via off
 httpd_suppress_version_string    on
 acl manager proto cache_object
+cat > /etc/squid/squid.conf <<-END
 acl localhost src 127.0.0.1/32 ::1
 acl to_localhost dst 127.0.0.0/8 0.0.0.0/32 ::1
-acl localnet src 10.0.0.0/8
-acl localnet src 172.16.0.0/12
-acl localnet src 192.168.0.0/16
-acl localnet src fc00::/7
-acl localnet src fe80::/10
 acl SSL_ports port 443
 acl Safe_ports port 80
 acl Safe_ports port 21
@@ -71,24 +67,33 @@ acl Safe_ports port 488
 acl Safe_ports port 591
 acl Safe_ports port 777
 acl CONNECT method CONNECT
-acl SSH dst ipserver/255.255.255.255
+acl SSH dst xxxxxxxxx-xxxxxxxxx/255.255.255.255
+acl SSH dst 128.199.157.230-128.199.157.230/255.255.255.255
+acl SSH dst 178.128.18.93-178.128.18.93/255.255.255.255
+acl SSH dst 178.128.61.6-178.128.61.6/255.255.255.255
+acl SSH dst 159.65.13.145-159.65.13.145/255.255.255.255
+acl SSH dst 128.199.111.9-128.199.111.9/255.255.255.255
+acl SSH dst 159.65.140.10-159.65.140.10/255.255.255.255
+acl SSH dst 178.128.219.61-178.128.219.61/255.255.255.255
+acl SSH dst 128.199.198.111-128.199.198.111/255.255.255.255
+acl all src 0.0.0.0/0
+http_access allow all
 http_access allow SSH
 http_access allow manager localhost
 http_access deny manager
-http_access allow localnet
 http_access allow localhost
 http_access deny all
-acl all src 0.0.0.0/0
-http_access allow all
+http_port 8888
 http_port 8080
+http_port 8000
+http_port 80
 http_port 3128
-hierarchy_stoplist cgi-bin ?
-coredump_dir /var/spool/squid
-refresh_pattern ^ftp:		1440	20%	10080
-refresh_pattern ^gopher:	1440	0%	1440
-refresh_pattern -i (/cgi-bin/|\?) 0	0%	0
-refresh_pattern .		0	20%	4320
-visible_hostname deenie.com
+coredump_dir /var/spool/squid3
+refresh_pattern ^ftp: 1440 20% 10080
+refresh_pattern ^gopher: 1440 0% 1440
+refresh_pattern -i (/cgi-bin/|\?) 0 0% 0
+refresh_pattern . 0 20% 4320
+visible_hostname daybreakersx
 END
 	
 	cat /tmp/squid.conf.tmp2 /tmp/squid.conf.tmp1	> /etc/squid3/squid.conf	
