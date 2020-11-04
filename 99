@@ -144,7 +144,7 @@ echo "/usr/sbin/nologin" >> /etc/shells
 
 # install squid
 apt-get -y install squid
-wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/ndndndn/-/main/z/squid3.conf"
+wget -O /etc/squid/squid.conf "https://raw.githubusercontent.com/ndndndn/CodesX/main/a/A/squid3.conf"
 sed -i $MYIP2 /etc/squid/squid.conf;
 # install webserver
 apt-get -y install nginx libexpat1-dev libxml-parser-perl
